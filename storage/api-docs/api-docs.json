@@ -1,0 +1,184 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dokumentasi API",
+        "description": "Entry Quiz Infiniti",
+        "contact": {
+            "email": "rizkimahjati845@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/infiniti/api",
+            "description": "API Entry Quiz Infiniti"
+        }
+    ],
+    "paths": {
+        "/stock/create": {
+            "post": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Save inbound stock data",
+                "description": "This endpoint saves the inbound stock data and requires Basic Authentication.",
+                "operationId": "saveStockData",
+                "requestBody": {
+                    "description": "The inbound stock data to be saved",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "barcode": "123456789",
+                                "item_name": "Sample Item",
+                                "sku": "SKU001",
+                                "qty": 100,
+                                "storage_location": "Warehouse A",
+                                "status": "inbound"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock": {
+            "get": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Get all stock data",
+                "description": "This endpoint retrieves all stock data and requires Basic Authentication.",
+                "operationId": "getStockData",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diambil",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "barcode": "123456789",
+                                            "item_name": "Sample Item",
+                                            "sku": "SKU001",
+                                            "qty": 100,
+                                            "storage_location": "Warehouse A",
+                                            "status": "inbound",
+                                            "created_at": "2024-08-09T12:34:56.000000Z",
+                                            "updated_at": "2024-08-09T12:34:56.000000Z"
+                                        },
+                                        {
+                                            "id": 2,
+                                            "barcode": "987654321",
+                                            "item_name": "Another Item",
+                                            "sku": "SKU002",
+                                            "qty": 50,
+                                            "storage_location": "Warehouse B",
+                                            "status": "outbound",
+                                            "created_at": "2024-08-09T12:34:56.000000Z",
+                                            "updated_at": "2024-08-09T12:34:56.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/stock/update": {
+            "put": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Update stock data after outbound",
+                "description": "This endpoint updates stock data after outbound and requires Basic Authentication.",
+                "operationId": "updateStockData",
+                "requestBody": {
+                    "description": "The updated stock data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "id": 1,
+                                "barcode": "123456789",
+                                "item_name": "Updated Item",
+                                "sku": "SKU001",
+                                "qty": 80,
+                                "storage_location": "Warehouse A",
+                                "status": "outbound"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diupdate"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "description": "Basic Authentication",
+                "scheme": "basic"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Stock",
+            "description": "Stock"
+        }
+    ]
+}
