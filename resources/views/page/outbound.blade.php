@@ -154,18 +154,18 @@
 
         function updateDB(data, id) {
             axios.post(apiUrl + `/stock/update?_method=PUT`, {
-                    data: {
-                        id: id,
-                        barcode: data.barcode,
-                        item_name: data.itemName,
-                        sku: data.SKU,
-                        qty: data.qty,
-                        storage_location: storage_location,
-                        status: 'outbound'
-                    },
+                    id: id,
+                    barcode: data.barcode,
+                    item_name: data.itemName,
+                    sku: data.SKU,
+                    qty: data.qty,
+                    storage_location: storage_location,
+                    status: 'outbound'
+                }, {
                     auth: {
                         username: username,
                         password: password
+
                     }
                 })
                 .then(response => {

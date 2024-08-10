@@ -121,8 +121,10 @@
                     const data = response.data;
                     console.log(data)
                     const combinedData = collectTableData();
-                    combinedData.storageLocation = data.storageLocation;
-                    insertDB(combinedData);
+                   
+                    combinedData[0].storage_location = data.storageLocation;
+                    console.log(combinedData[0])
+                    insertDB(combinedData[0]);
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -136,35 +138,35 @@
 
             rows.forEach(row => {
                 const rowData = {
-                    no: row.cells[0].innerText,
+                    // no: row.cells[0].innerText,
                     barcode: row.cells[1].innerText,
                     item_name: row.cells[2].innerText,
                     sku: row.cells[3].innerText,
-                    qty: row.cells[4].innerText
+                    qty: row.cells[4].innerText,
+                    status: "inbound"
                 };
                 tableData.push(rowData);
             });
 
-            return {
-                items: tableData
-            };
+            return tableData;
         }
 
         function insertDB(data) {
-            console.log(username,password)
-            axios.post(apiUrl + `/stock/create`, {
-                    data: data,
-                    auth: {
-                        username: username,
-                        password: password
+            console.log(data)
+            axios.post(apiUrl + `/stock/create`,
+                    data, 
+                    {
+                        auth: {
+                            username: username,
+                            password: password
+                        }
                     }
-                })
+                )
                 .then(response => {
                     const data = response.data;
                     if (data.success) {
-                        console.log(data)
-                        alert(data.message)
-                        getData()
+                        alert(data.message);
+                        location.reload();
                     } else {
                         console.error(data.message);
                     }

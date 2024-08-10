@@ -49,7 +49,7 @@ class Controller extends BaseController
 
     public function checkAuth($u, $p)
     {
-        if ($u === $this->username && Hash::check($p, $this->password)) {
+        if ($u == $this->username && Hash::check($p, $this->password)) {
             return true;
         }
         return false;

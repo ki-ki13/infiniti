@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('barcode')->unique();  // barcode column
             $table->string('item_name');  // item_name column
-            $table->string('sku')->unique();  // sku column
+            $table->string('sku');  // sku column
             $table->integer('qty');  // qty column
             $table->string('storage_location');  // storage_location column
             $table->enum('status', ['inbound', 'outbound']);
