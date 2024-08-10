@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\InboundController;
+use App\Http\Controllers\OutboundController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/outbound', [OutboundController::class, 'index']);
+Route::get('/inbound', [InboundController::class, 'index']);

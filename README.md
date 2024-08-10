@@ -1,66 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Infiniti Inventory Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
+This system manages the inbound and outbound processes of inventory items using Laravel, MySQL, and Swagger. It integrates with an external API for certain operations and provides its own API for data management.
 
-## About Laravel
+## Database Structure
+Database Name: infiniti
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Table: stock
+- id (primary key)
+- barcode (string)
+- item_name (string)
+- sku (string)
+- qty (integer)
+- storage_location (string)
+- status (enum: 'inbound'/'outbound')
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API Documentation
+API documentation can be accessed at: `localhost/infiniti/documentation`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Authentication: 
+- Username and password are required for API access
+- Use the same credentials as provided for the quiz API
 
-## Learning Laravel
+## System Flow
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Inbound Process
+1. Scan barcode
+2. Request inbound API to get storage location
+3. Save the data using the create API
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Outbound Process
+1. Display data using the get API
+2. Request outbound API for a specific item by clicking the outbound button
+3. Update the data using the update API
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## API Endpoints
 
-## Laravel Sponsors
+### 1. Get Parts Detail
+- **Endpoint:** `/api/parts/getDetail`
+- **Method:** POST
+- **Description:** Retrieves detail of a part based on barcode
+- **Request Body:**
+  ```json
+  {
+    "username": "string",
+    "password": "string",
+    "barcode": "string"
+  }
+  ```
+  Response: Part details
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Send Outbound Task
 
-### Premium Partners
+- **Endpoint**: /api/robots/sendOutboundTask
+- **Method**: POST
+- **Description**: Initiates an outbound task for a specific storage location
+- **Request Body**:
+```json
+{
+  "username": "string",
+  "password": "string",
+  "storage_location": "string"
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 3. Create Stock Item
 
-## Contributing
+- **Endpoint**: /api/stock
+- **Method**: POST
+- **Description**: Creates a new stock item
+- **Request Body**: Stock item details
+- **Response**: Created stock item
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Update Stock Item
 
-## Code of Conduct
+- **Endpoint**: /api/stock/{id}
+- **Method**: PUT
+- **Description**: Updates an existing stock item
+- **Request Body**: Updated stock item details
+- **Response**: Updated stock item
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Get All Stock Items
 
-## Security Vulnerabilities
+- **Endpoint**: /api/stock
+- **Method**: GET
+- **Description**: Retrieves all stock items
+- **Response**: List of all stock items
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Frontend Integration
 
-## License
+The frontend is integrated with both the external quiz API and the custom Laravel API.
+It handles user interactions for inbound and outbound processes.
+Communicates with the backend to perform CRUD operations on the stock items.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Setup and Installation
+
+- Clone the Laravel project
+- Set up the MySQL database named 'infiniti'
+- Run database migrations
+- Install and configure Swagger for API documentation
+- Ensure proper configuration for connecting to the external quiz API
+
+## Testing
+To test the API documentation:
+
+Access localhost/infiniti/documentation
+Use the provided username and password (same as quiz API credentials)
+
+## Security Considerations
+
+API credentials are handled securely
+CORS issues are managed through proper backend configuration
+Data validation is implemented for all API endpoints
+
+## Development Progress
+- Make frontend
+- Integrate frontend and API from quiz
+- Initiate Laravel project
+- Initiate db
+- Migrate db
+- Initiate swagger
+- Make API to save data
+- Make API to insert data
+- Make API to get all the data
+- Integrate frontend and my own API
+

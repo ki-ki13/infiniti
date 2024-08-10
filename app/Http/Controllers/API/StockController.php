@@ -116,7 +116,7 @@ class StockController extends Controller
         $data = null;
         if ($this->checkAuth($username, $password)) {
             $message = "Data berhasil diambil";
-            $data = Stock::get();
+            $data = Stock::where('status','inbound')->get();
             $success = True;
         }
         return response()->json([
