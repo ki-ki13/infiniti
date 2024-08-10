@@ -20,7 +20,7 @@ API documentation can be accessed at: `localhost/infiniti/documentation`
 
 Authentication: 
 - Username and password are required for API access
-- Use the same credentials as provided for the quiz API
+- Using the same credentials as provided for the quiz API
 
 ## System Flow
 
